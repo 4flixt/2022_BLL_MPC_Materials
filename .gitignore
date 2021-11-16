@@ -1,3 +1,8 @@
+# Ignore sampled files
+/**/validation_sampling/**/*.pkl
+/**/sample_results/*.pkl
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
