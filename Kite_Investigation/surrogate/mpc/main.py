@@ -43,16 +43,16 @@ from template_simulator import template_simulator
 show_animation = True
 store_results = False
 store_animation = False
-trust_region_cons = False
+trust_region_cons = True
 
-model_type = 'NN' # 'NN' or 'GP'
+model_type = 'GP' # 'NN' or 'GP'
 
 """
 Get configured do-mpc modules:
 """
 np.random.seed(5)
 
-case = 0
+case = 1
 plan = load_pickle('./validation_sampling/kite_validation_01/kite_validation_01.pkl')
 
 
@@ -66,6 +66,8 @@ if model_type == 'NN':
     from tensorflow import keras
     from template_nn_model import template_nn_model
 
+    print('Loading NN model.')
+
     export_name = 'S01_NN_M01'
     export_path = '../nn_models/{}/'
 
@@ -74,16 +76,20 @@ if model_type == 'NN':
     surrogate_model = template_nn_model('SX', nn_model, nn_model_aux)
 
     trust_region_ub = 0.02
+    solver_tol = 1e-6
 elif model_type == 'GP':
     from template_gp_model import template_gp_model
 
-    export_name = 'S01_M01'
+    print('Loading GP model.')
+
+    export_name = 'S01_GP_M02_100'
     export_path = '../gp_models/{}/'
 
     gp_model = do_mpc.tools.load_pickle(export_path.format(export_name) + export_name + '_gp.pkl')
-    surrogate_model = template_gp_model('SX', gp_model)
+    surrogate_model = template_gp_model('MX', gp_model)
 
     trust_region_ub = 0.3
+    solver_tol = 1e-4
 
 
 """
@@ -92,7 +98,7 @@ Get configured do-mpc modules:
 
 
 model = template_model()
-mpc = template_mpc(surrogate_model, h_min, trust_region_cons, w_ref, E_0, trust_region_ub)
+mpc = template_mpc(surrogate_model, h_min, trust_region_cons, w_ref, E_0, trust_region_ub, solver_tol)
 simulator = template_simulator(model, w_ref, E_0)
 estimator = do_mpc.estimator.StateFeedback(model)
 

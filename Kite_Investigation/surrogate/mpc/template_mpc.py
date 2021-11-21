@@ -29,7 +29,7 @@ sys.path.append('../../')
 import do_mpc
 
 
-def template_mpc(model, h_min, trust_region_cons, w_ref, E_0, trust_region_ub):
+def template_mpc(model, h_min, trust_region_cons, w_ref, E_0, trust_region_ub, tol=1e-6):
     """
     --------------------------------------------------------------------------
     template_mpc: tuning parameters
@@ -44,7 +44,7 @@ def template_mpc(model, h_min, trust_region_cons, w_ref, E_0, trust_region_ub):
         't_step': 0.15,
         'store_full_solution': True,
         # Use MA27 linear solver in ipopt for faster calculations:
-        'nlpsol_opts': {'ipopt.linear_solver': 'MA27'}
+        'nlpsol_opts': {'ipopt.linear_solver': 'MA27', 'ipopt.acceptable_tol': tol}
     }
 
     mpc.set_param(**setup_mpc)
