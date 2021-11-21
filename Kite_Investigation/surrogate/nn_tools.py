@@ -1,4 +1,20 @@
 import numpy as np
+import tensorflow as tf
+from casadi import *
+
+def keras2casadi(nn_model, input):
+    a = [input.T]
+
+    for layer in nn_model.layers:
+        w = layer.get_weights()
+        if w:
+            l = a[-1]@w[0] + w[1].reshape(1,-1)
+            if layer.activation == tf.keras.activations.tanh:
+                a.append(tanh(l))
+            if layer.activation == tf.keras.activations.linear:
+                a.append(l)
+
+    return a
 
 class NNPredictModel:
     def __init__(self, nn, act_nn, a_train, in_scaler, out_scaler, x0, sig_e=1, sig_w=1e3):
