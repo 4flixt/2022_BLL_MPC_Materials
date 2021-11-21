@@ -6,7 +6,14 @@ from casadi import *
 def generic_kernel(X1,X2, k_tilde):
     """Generic kernel. Wraps a Kernel function and evaluates it for all its elements."""
     if isinstance(X1,(casadi.MX, casadi.SX)) or isinstance(X2,(casadi.MX, casadi.SX)):
-        K = vertcat(*[horzcat(*[k_tilde(xi, xj) for xj in vertsplit(X2)]) for xi in vertsplit(X1)])
+        if X1.shape[0] == 1:
+            print('faster code')
+            K = k_tilde(repmat(X1,X2.shape[0],1),X2).T
+        elif X2.shape[0] == 1:
+            print('faster code')
+            K = k_tilde(repmat(X2,X1.shape[0],1),X1).T
+        else:
+            K = vertcat(*[horzcat(*[k_tilde(xi, xj) for xj in vertsplit(X2)]) for xi in vertsplit(X1)])
     else:
         K = np.array([[k_tilde(xi,xj) for xj in X2] for xi in X1])
     return K
@@ -17,7 +24,7 @@ def RBF(l=0.5):
 
     def rbf_eval(x1,x2,l=l):
         if isinstance(x1,(casadi.MX, casadi.SX)) or isinstance(x2,(casadi.MX, casadi.SX)):
-            return exp(-0.5*sum2(sum1((x1-x2)**2))/l**2)
+            return exp(-0.5*sum2((x1-x2)**2)/l**2)
         else:
             return np.exp(-0.5*np.sum((x1-x2)**2)/l**2)
 
