@@ -45,7 +45,7 @@ store_results = False
 store_animation = False
 trust_region_cons = True
 
-model_type = 'GP' # 'NN' or 'GP'
+model_type = 'NN' # 'NN' or 'GP'
 
 """
 Get configured do-mpc modules:

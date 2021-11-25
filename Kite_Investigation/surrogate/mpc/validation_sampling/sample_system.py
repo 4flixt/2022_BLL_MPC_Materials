@@ -33,12 +33,14 @@ nn_model = keras.models.load_model(export_path.format(export_name))
 
 """ Settings """
 
-trust_region_cons = False
+trust_region_cons = True
 trust_region_ub = 0.02
 
 w_ref = 10
 E_0 = 6
 h_min = 100
+
+solver_tol = 1e-6
 
 def info():
     print(mp.current_process())
@@ -50,7 +52,7 @@ def sample_function(x0, seed):
     info()
     surrogate_model = template_nn_model('SX', nn_model, nn_model_aux)
     model = template_model()
-    mpc = template_mpc(surrogate_model, h_min, trust_region_cons, w_ref, E_0, trust_region_ub)
+    mpc = template_mpc(surrogate_model, h_min, trust_region_cons, w_ref, E_0, trust_region_ub, solver_tol)
     simulator = template_simulator(model, w_ref, E_0)
     estimator = do_mpc.estimator.StateFeedback(model)
 
