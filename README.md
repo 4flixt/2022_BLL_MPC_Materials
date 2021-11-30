@@ -31,7 +31,7 @@ If you have questions, remarks, technical issues etc. feel free to **use the [di
 We are looking forward to your feedback and the discussion. 
 
 The purpose of this repository is to provide all the materials needed to recreate our results and to allow to experiment yourself with the code. 
-Most importantly, we are providing here the investigated system model.
+Most importantly, we are providing here the [investigated system model (towing kite)](https://github.com/4flixt/2021_L4DC_BLL_MPC_Materials/blob/main/Kite_Investigation/Kite_Introduction.ipynb).
 All of our results are created using Python code (using Jupyter Notebooks) and the toolboxes:
 
 - numpy
@@ -39,6 +39,30 @@ All of our results are created using Python code (using Jupyter Notebooks) and t
 - scipy
 - CasADi
 
-As well as our own toolbox [do-mpc](www.do-mpc.com).
+As well as our own toolbox [do-mpc](www.do-mpc.com). 
+We heavily rely on the newly developed **do-mpc sampling tools**, for example for data generation and for statistical validation of our findings.
+For a comprehensive guide to this feature, please watch this [video](https://www.youtube.com/watch?v=3ELyErkYPhE&t).
 
-**To investigate the code**, we recommend to either locally install Python (and the toolboxes) and then clone the repo **or** you you can use the Binder links listed below. Binder clones the repo on their servers and installs all packages automatically. This way you can get started immediately! 
+### Organization of this repository
+
+- **BLL_Fundamentals**
+    - [BLL_Fundamentals](https://github.com/4flixt/2021_L4DC_BLL_MPC_Materials/blob/main/BLL_Fundamentals/BLL_Fundamentals.ipynb): Used to generate the results shown in Figure 1 in our paper. 
+- **Kite_Investigation**
+    - [Kite Introduction](https://github.com/4flixt/2021_L4DC_BLL_MPC_Materials/blob/main/Kite_Investigation/Kite_Introduction.ipynb): Statement of the investigated system and all required parameters. Showcasing an examplary MPC closed trajectory and how to obtain it. 
+    - **system**
+        - Python files for model, simulator, (MPC) controller used to generate closed-loop trajectories
+        - main.py file (creating similar results as in the Kite Introduction Jupyter Notebook)
+    - **sampling** Sample system to create training data for GP/NN system model
+        - ``create_sampling_plan.py``: Define 100 cases (varying initial states, etc.)
+        - ``sample_sytem.py``: Create closed-loop trajectories for the defined cases 
+    - **surrogate** Train GP and NN system model
+        - ``nn_kite_modell``: Jupyter notebook from which the NN system model was trained. 
+        - ``gp_kite_modell``: Jupyter notebook from which the GP system model was trained. 
+        - ``nn_vs_gp_sys_id``: Jupyter notebook to compare GP and NN system model in open-loop predictions (used for Figure 2 in our paper)
+    - **mpc**: MPC with surrogate NN/GP model(s)
+        - Python files for (GP / NN)model, simulator, (MPC) controller
+        - **validation_sampling**: Validate MPC controller based on surrogate model
+            - ``create_sampling_plan.py``: Define 20 cases
+            - ``sample_sytem.py``: Create closed-loop trajectories for the defined cases 
+            - `validation_evalution``: Jupyter notebook to compare the obtained results (used for Figure 3 in our paper)
+
