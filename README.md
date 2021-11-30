@@ -27,7 +27,7 @@ the equivalent formulation without trust region leads to poor closed-loop perfor
 Dear visitor, 
 
 thank you for checking our the supplementary materials to our work. 
-If you have questions, remarks, technical issues etc. feel free to **use the discussions page of this repository.**
+If you have questions, remarks, technical issues etc. feel free to **use the [discussions](https://github.com/4flixt/2021_L4DC_BLL_MPC_Materials/discussions) page of this repository.**
 We are looking forward to your feedback and the discussion. 
 
 The purpose of this repository is to provide all the materials needed to recreate our results and to allow to experiment yourself with the code. 
