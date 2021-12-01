@@ -4,7 +4,7 @@ from casadi import *
 from casadi.tools import *
 import pdb
 import sys
-sys.path.append('../../../../../do-mpc_fork/')
+sys.path.append('../../../../../do-mpc/')
 import do_mpc
 
 import matplotlib.pyplot as plt

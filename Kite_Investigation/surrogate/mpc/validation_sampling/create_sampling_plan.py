@@ -1,5 +1,5 @@
 import sys
-sys.path.append('../../../../../do-mpc_fork/')
+sys.path.append('../../../../../do-mpc/')
 import do_mpc
 import time
 import os
