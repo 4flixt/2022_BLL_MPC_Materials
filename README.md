@@ -51,7 +51,7 @@ For a comprehensive guide to this feature, please watch this [video](https://www
     - [Kite Introduction](https://github.com/4flixt/2021_L4DC_BLL_MPC_Materials/blob/main/Kite_Investigation/Kite_Introduction.ipynb): Statement of the investigated system and all required parameters. Showcasing an examplary MPC closed trajectory and how to obtain it. 
     - **system**
         - Python files for model, simulator, (MPC) controller used to generate closed-loop trajectories
-        - ``main.py``` file (creating similar results as in the Kite Introduction Jupyter Notebook)
+        - ``main.py`` file (creating similar results as in the Kite Introduction Jupyter Notebook)
     - **sampling** Sample system to create training data for GP/NN system model
         - ``create_sampling_plan.py``: Define 100 cases (varying initial states, etc.)
         - ``sample_sytem.py``: Create closed-loop trajectories for the defined cases 
