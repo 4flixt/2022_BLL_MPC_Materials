@@ -51,18 +51,24 @@ For a comprehensive guide to this feature, please watch this [video](https://www
     - [Kite Introduction](https://github.com/4flixt/2021_L4DC_BLL_MPC_Materials/blob/main/Kite_Investigation/Kite_Introduction.ipynb): Statement of the investigated system and all required parameters. Showcasing an examplary MPC closed trajectory and how to obtain it. 
     - **system**
         - Python files for model, simulator, (MPC) controller used to generate closed-loop trajectories
-        - main.py file (creating similar results as in the Kite Introduction Jupyter Notebook)
+        - ``main.py``` file (creating similar results as in the Kite Introduction Jupyter Notebook)
     - **sampling** Sample system to create training data for GP/NN system model
         - ``create_sampling_plan.py``: Define 100 cases (varying initial states, etc.)
         - ``sample_sytem.py``: Create closed-loop trajectories for the defined cases 
     - **surrogate** Train GP and NN system model
-        - ``nn_kite_modell``: Jupyter notebook from which the NN system model was trained. 
-        - ``gp_kite_modell``: Jupyter notebook from which the GP system model was trained. 
-        - ``nn_vs_gp_sys_id``: Jupyter notebook to compare GP and NN system model in open-loop predictions (used for Figure 2 in our paper)
+        - [train_test_val_data_prep](https://github.com/4flixt/2021_L4DC_BLL_MPC_Materials/blob/main/Kite_Investigation/surrogate/train_test_val_data_prep.ipynb): Load and analyze sampled sequences. Create training, testing and validation data for GP and NN.
+        - [nn_kite_modell](https://github.com/4flixt/2021_L4DC_BLL_MPC_Materials/blob/main/Kite_Investigation/surrogate/nn_kite_modell.ipynb): Jupyter notebook from which the NN system model was trained. 
+        - [gp_kite_modell](https://github.com/4flixt/2021_L4DC_BLL_MPC_Materials/blob/main/Kite_Investigation/surrogate/gp_kite_modell.ipynb): Jupyter notebook from which the GP system model was trained. 
+        - [nn_vs_gp_sys_id](https://github.com/4flixt/2021_L4DC_BLL_MPC_Materials/blob/main/Kite_Investigation/surrogate/nn_vs_gp_sys_id.ipynb): Jupyter notebook to compare GP and NN system model in open-loop predictions (used for Figure 2 in our paper)
     - **mpc**: MPC with surrogate NN/GP model(s)
         - Python files for (GP / NN)model, simulator, (MPC) controller
         - **validation_sampling**: Validate MPC controller based on surrogate model
             - ``create_sampling_plan.py``: Define 20 cases
             - ``sample_sytem.py``: Create closed-loop trajectories for the defined cases 
-            - `validation_evalution``: Jupyter notebook to compare the obtained results (used for Figure 3 in our paper)
+            - [validation_evalution](https://github.com/4flixt/2021_L4DC_BLL_MPC_Materials/blob/main/Kite_Investigation/surrogate/mpc/validation_sampling/validation_evalution.ipynb): Jupyter notebook to compare the obtained results (used for Figure 3 in our paper)
+
+
+Please notice that we **do not include data to reproduce the results** due to space restrictions of this repository.
+We do, however, provide all the tools to re-sample the exact same data that we used (random seeds are fixed). 
+
 
