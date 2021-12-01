@@ -2,6 +2,35 @@ import numpy as np
 import tensorflow as tf
 from casadi import *
 
+def get_keras_model(architecture, activation='relu'):
+    """Function to obtain a Keras model
+
+    Model is defined by the parameter ``architecture`` which must be a list.
+
+    Example:
+
+        architecture = [1, 5, 5, 1]
+
+    Returns a NN with one input, two hidden layers (each with 5 neurons) and one output.
+
+    All hidden layer (except for the output layer) have the same activation function.
+    """
+    inputs = tf.keras.Input(shape=architecture[0], name='input')
+    outputs = [inputs]
+
+    for n_l in range(1, len(architecture)-1):
+        outputs.append(tf.keras.layers.Dense(architecture[n_l], 
+                                 activation=activation,
+                                 name='hidden_{}'.format(n_l))(outputs[n_l-1]))
+
+    outputs.append(tf.keras.layers.Dense(architecture[-1],
+                                      name='output')(outputs[-1]))
+
+    model = tf.keras.Model(inputs=inputs, outputs=outputs[-1])
+    activation_model = tf.keras.Model(inputs=inputs, outputs=outputs[-2])
+
+    return model, activation_model
+
 def keras2casadi(nn_model, input):
     a = [input.T]
 
